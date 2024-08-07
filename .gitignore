@@ -1,0 +1,5 @@
+model/dataset
+model/train/*
+model/validation/*
+model/tb_detection_model.h5
+static/images/*

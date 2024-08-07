@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tuberculosis Prediction</title>
+</head>
+<body>
+    <h1>Tuberculosis Prediction from X-ray Images</h1>
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".png, .jpg, .jpeg">
+        <input type="submit" value="Predict">
+    </form>
+    {% if filename %}
+    <h2>Uploaded Image</h2>
+    <img src="{{ url_for('static', filename='images/' + filename) }}" alt="Uploaded Image" width="300">
+    <h2>Prediction Result</h2>
+    <p>{{ result }}</p>
+    {% endif %}
+</body>
+</html>
+
