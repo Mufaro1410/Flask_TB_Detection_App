@@ -17,7 +17,7 @@ def predict_tb(image_path):
     img_array = np.expand_dims(img_array, axis=0) / 255.0  # Normalize
     prediction = model.predict(img_array)
     if prediction[0][0] >= 0.5:
-        return 'Tuberculosis Detected'
+        return {'predicted': 'Positive'}
     else:
-        return 'No Tuberculosis Detected'
+        return {'predicted': 'Negative'}
 

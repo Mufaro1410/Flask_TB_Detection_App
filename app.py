@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect
 from werkzeug.utils import secure_filename
 import os
 from model import predict_tb
@@ -12,8 +12,12 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
-@app.route('/', methods=['GET', 'POST'])
-def upload_file():
+@app.route('/')
+def index():
+    return render_template("index.html")
+
+@app.route('/upload', methods=['GET', 'POST'])
+def upload():
     if request.method == 'POST':
         if 'file' not in request.files:
             return redirect(request.url)
@@ -24,7 +28,8 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             result = predict_tb(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return render_template('index.html', filename=filename, result=result)
+            # return render_template('index.html', filename=filename, result=result)
+            return render_template("result.html", pred=result['predicted'], filename=filename)
     return render_template('index.html')
 
 if __name__ == '__main__':

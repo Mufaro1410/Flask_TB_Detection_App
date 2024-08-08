@@ -1,9 +1,10 @@
+import os
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-# Model architecture
+# Function to build the model architecture
 def build_model(input_shape):
     model = Sequential([
         Conv2D(32, (3, 3), activation='relu', input_shape=input_shape),
@@ -21,41 +22,45 @@ def build_model(input_shape):
     ])
     return model
 
-# Build the model
-print('building Model...')
-input_shape = (224, 224, 3)  # Adjust based on your image size
-model = build_model(input_shape)
-model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+# Check if model file exists
+if not os.path.exists('tb_detection_model.h5'):
+    print('Building and training model...')
 
-# Data generators
-print('Data Generators')
-train_datagen = ImageDataGenerator(rescale=1./255)
-train_generator = train_datagen.flow_from_directory(
-    'train',
-    target_size=(224, 224),
-    batch_size=32,
-    class_mode='binary'
-)
+    # Build the model
+    input_shape = (224, 224, 3)  # Adjust based on your image size
+    model = build_model(input_shape)
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-val_datagen = ImageDataGenerator(rescale=1./255)
-val_generator = val_datagen.flow_from_directory(
-    'validation',
-    target_size=(224, 224),
-    batch_size=32,
-    class_mode='binary'
-)
+    # Data generators
+    train_datagen = ImageDataGenerator(rescale=1./255)
+    train_generator = train_datagen.flow_from_directory(
+        'train',
+        target_size=(224, 224),
+        batch_size=32,
+        class_mode='binary'
+    )
 
-# Train the model
-print('Training model...')
-history = model.fit(
-    train_generator,
-    steps_per_epoch=train_generator.samples // train_generator.batch_size,
-    epochs=10,
-    validation_data=val_generator,
-    validation_steps=val_generator.samples // val_generator.batch_size
-)
+    val_datagen = ImageDataGenerator(rescale=1./255)
+    val_generator = val_datagen.flow_from_directory(
+        'validation',
+        target_size=(224, 224),
+        batch_size=32,
+        class_mode='binary'
+    )
 
-# Save the model
-print("Saving model...")
-model.save('tb_detection_model.h5')
+    # Train the model
+    history = model.fit(
+        train_generator,
+        steps_per_epoch=train_generator.samples // train_generator.batch_size,
+        epochs=10,
+        validation_data=val_generator,
+        validation_steps=val_generator.samples // val_generator.batch_size
+    )
 
+    # Save the model
+    print("Saving model...")
+    model.save('tb_detection_model.h5')
+    # model.save('tb_detection_model.keras')
+
+else:
+    print("Model already exists. Skipping training.")
