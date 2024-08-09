@@ -1,11 +1,9 @@
 # app/__init__.py
 from flask import Flask, render_template, request, redirect
 from werkzeug.utils import secure_filename
-# from flask_sqlalchemy import SQLAlchemy
 import os
+# from db.db import db
 from model import predict_tb
-
-# db = SQLAlchemy()
 
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydb.db'
@@ -25,6 +23,10 @@ def allowed_file(filename):
 @app.route('/')
 def index():
     return render_template("index.html")
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
 
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
