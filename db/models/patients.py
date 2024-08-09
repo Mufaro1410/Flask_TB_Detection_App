@@ -1,3 +1,5 @@
+from db import db
+
 class Patient(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(80), unique=True, nullable=False)

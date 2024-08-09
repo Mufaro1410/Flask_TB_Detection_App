@@ -1,9 +1,9 @@
-from db import DB
+from db import db
 from models.patients import Patient
 
 def createPatient(data):
-    new_user = User(username=data.username, password=data.password)
-    db.session.add(new_user)
+    new_patient = Patient(firstname=data.firstname, lastname=data.lastname, dob=data.dob, contact=data.contact)
+    db.session.add(new_patient)
     db.session.commit()
 
 def getPatients():

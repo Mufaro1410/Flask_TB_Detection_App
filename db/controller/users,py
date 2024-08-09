@@ -1,4 +1,4 @@
-from db import DB
+from db import db
 from models.users import User
 
 def createUser(data):
