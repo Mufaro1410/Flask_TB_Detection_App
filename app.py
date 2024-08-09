@@ -1,11 +1,21 @@
+# app/__init__.py
 from flask import Flask, render_template, request, redirect
 from werkzeug.utils import secure_filename
+# from flask_sqlalchemy import SQLAlchemy
 import os
 from model import predict_tb
 
+# db = SQLAlchemy()
+
 app = Flask(__name__)
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///mydb.db'
 app.config['UPLOAD_FOLDER'] = './static/images'
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
+
+
+# with app.app_context():
+#     db.create_all()
+
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
