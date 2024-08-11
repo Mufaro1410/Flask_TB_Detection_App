@@ -1,0 +1,28 @@
+{%extends "index.html"%}
+{%block content%}
+	<section class="section-dark" style="text-align: center;">
+		<br><br>
+        <h1>{{ patient.firstname }} {{ patient.lastname }} Information</h1>
+		<table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Firstname</th>
+                    <th>Lastname</th>
+                    <th>DOB</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>patient.id</td>
+                    <td>patient.firtsname</td>
+                    <td>patient.lastname</td>
+                    <td>patient.dob</td>
+                    <td>patient.contact</td>
+                </tr>
+            </tbody>
+        </table>	
+		<!-- <figure><img src="/static/images/{{filename}}" style="width: 360px; height: 360px"></figure><bsr> -->
+	</section>
+{%endblock%}

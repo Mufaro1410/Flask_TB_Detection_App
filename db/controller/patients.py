@@ -1,5 +1,5 @@
-from db import db
-from models.patients import Patient
+from ..dbConfig import db
+from ..models.patients import Patient
 
 def createPatient(data):
     new_patient = Patient(firstname=data.firstname, lastname=data.lastname, dob=data.dob, contact=data.contact)
